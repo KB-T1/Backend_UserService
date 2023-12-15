@@ -44,9 +44,7 @@ podTemplate(
 		try {
 
 			stage("Build Jar") {
-				container("gradle") {
-					sh "gradle clean build -x test"
-				}
+				sh "gradle clean build -x test"
 			}
 
 			stage("Build Container image") {
