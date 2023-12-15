@@ -12,21 +12,20 @@ podTemplate(
 	containers: [
 		containerTemplate(name: "trivy", image: "aquasec/trivy", ttyEnabled: true, command: "cat"),
 		containerTemplate(name: "kubectl", image: "lachlanevenson/k8s-kubectl", command: "cat", ttyEnabled: true),
-		containerTemplate(name: "scanner", image: "newtmitch/sonar-scanner", ttyEnabled: true, command: "cat"),
+		containerTemplate(name: "gradle", image: "gradle:jdk17", ttyEnabled: true, command: "cat"),
 		containerTemplate(name: 'podman', image: 'mgoltzsche/podman', ttyEnabled: true, command: 'cat', privileged: true)
 	],
 	//volume mount
-	volumes: [
-	    //hostPathVolume(hostPath: "/var/run/docker.sock", mountPath: "/var/run/docker.sock")
-		hostPathVolume(hostPath: "/etc/containers/registries.conf", mountPath: "/etc/containers/registries.conf"),
-		hostPathVolume(hostPath: "/etc/containers/registries.conf.d/myharbor.conf", mountPath: "/etc/containers/registries.conf.d/myharbor.conf")
-	]
+    volumes: [
+    	nfsVolume( mountPath: '/root/.gradle', serverAddress: '10.193.24.247', serverPath: '/users/data/gradle', readOnly: false ),
+    ]
 )
+
 {
 	node(label) {
 		stage("Get Source") {
 			git branch: 'main', url: 'https://github.com/KB-T1/Backend_UserService.git'
-        	}
+        }
 
 		//-- Read pipeline.properties and setting variables
 		def props = readProperties  file:"deployment/pipeline.properties"
@@ -42,9 +41,11 @@ podTemplate(
 		selector_val=props["selector_val"]
 
 		try {
-
 			stage("Build Jar") {
-				sh "gradle clean build -x test"
+				container("gradle") {
+					sh 'echo "Build jar under build/libs directory"'
+					sh "gradle build -x test"
+				}
 			}
 
 			stage("Build Container image") {
@@ -56,14 +57,14 @@ podTemplate(
 						)]) {
 						    sh 'echo user "$USER" pasword "$PASSWORD"'
 						    sh "podman login ${registry} --username ${USER} --password ${PASSWORD}"
-							sh "podman build -f ./deployment/Dockerfile -t ${registry}/${organization}/${repository}:${tag} --build-arg=ARTIFACTORY_FILE=ollilove.userservice-0.0.1-SNAPSHOT.jar ."
+							sh "podman build -f ./deployment/Dockerfile -t ${registry}/${organization}/${repository}:${tag} --build-arg ARTIFACTORY_FILE=${repository}.jar ."
 							sh "sleep 2"
 							sh "podman push ${registry}/${organization}/${repository}:${tag}"
 							sh "podman tag ${registry}/${organization}/${repository}:${tag} ${registry}/${organization}/${repository}:latest"
 							sh "podman push ${registry}/${organization}/${repository}:latest"
-						}
 					}
 				}
+			}
 
 			stage("Scan Image Vulnerability") {
 				container("trivy"){
@@ -88,7 +89,7 @@ podTemplate(
 				}
 			}
 
-	        	notifySlack("${currentBuild.currentResult}", "#00FF00")
+	        notifySlack("${currentBuild.currentResult}", "#00FF00")
 			echo "**** FINISH ALL STAGES : SUCCESS"
 
 		} catch(e) {
