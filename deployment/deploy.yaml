@@ -32,7 +32,31 @@ spec:
             limits:
               cpu: 500m
               memory: 1024Mi
+
 ---
+
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: kbt1-ollilove-user-service
+data:
+  DB_SERVER: mysql
+  DB_PORT: "3306"
+  DB_NAME: "kbt1"
+
+---
+
+kind: Secret
+apiVersion: v1
+metadata:
+  name: kbt1-ollilove-user-service
+type: Opaque
+data:
+  DB_USERNAME: ZmFrZXIK            #echo {username} | base64
+  DB_PASSWORD: a2J0MUJlc3QhCg==    #echo {password} | base64
+
+---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -45,7 +69,9 @@ spec:
     - name: kbt1-ollilove-user-service
       port: 8080
       targetPort: 8080
+
 ---
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
