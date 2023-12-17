@@ -21,7 +21,7 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String userName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "family_id",nullable = false)
     private Family familyId;
 

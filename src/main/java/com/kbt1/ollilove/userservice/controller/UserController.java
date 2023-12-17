@@ -3,6 +3,7 @@ package com.kbt1.ollilove.userservice.controller;
 
 import com.kbt1.ollilove.userservice.domain.User;
 import com.kbt1.ollilove.userservice.dto.UserRequestDTO;
+import com.kbt1.ollilove.userservice.dto.UserResponseDTO;
 import com.kbt1.ollilove.userservice.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,9 +26,17 @@ public class UserController {
 
     @PostMapping("")
     @Operation(summary = "사용자 기본정보 가져오기")
-    public ResponseEntity<User> selectUserInfo(@RequestBody UserRequestDTO userRequestDTO) {
-        return ResponseEntity.ok(userService.findUserById(userRequestDTO));
+    public ResponseEntity<UserResponseDTO> selectUserInfo(@RequestBody UserRequestDTO userRequestDTO) {
+        return ResponseEntity.ok(userService.findUserInfoById(userRequestDTO));
     }
+
+    @PostMapping("/family")
+    @Operation(summary = "가족 정보 가져오기")
+    public ResponseEntity<List<UserResponseDTO>> selectFamilyInfo(@RequestBody UserRequestDTO userRequestDTO) {
+        return ResponseEntity.ok(userService.findFamilyInfoByUserId(userRequestDTO));
+    }
+
+
 
 
 
