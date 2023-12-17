@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
@@ -23,9 +25,11 @@ public class UserController {
 
     @PostMapping("")
     @Operation(summary = "사용자 기본정보 가져오기")
-    public ResponseEntity<User> selectMyDjList(@RequestBody UserRequestDTO userRequestDTO) {
+    public ResponseEntity<User> selectUserInfo(@RequestBody UserRequestDTO userRequestDTO) {
         return ResponseEntity.ok(userService.findUserById(userRequestDTO));
     }
+
+
 
 
 }
