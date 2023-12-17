@@ -45,9 +45,9 @@ apiVersion: v1
 metadata:
   name: kbt1-ollilove-user-service-cm
 data:
-  DB_SERVER: 165.192.105.57
-  DB_PORT: 31029
-  DB_NAME: kbt1
+  DB_SERVER: mysql
+  DB_PORT: "3306"
+  DB_NAME: "kbt1"
 
 ---
 
