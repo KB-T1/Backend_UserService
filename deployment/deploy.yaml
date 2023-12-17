@@ -22,6 +22,11 @@ spec:
           env:
             - name: PORT
               value: "8080"
+          envFrom:
+            - configMapRef:
+                name: kbt1-ollilove-user-service-cm
+            - secretRef:
+                name: kbt1-ollilove-user-service-secret
           ports:
             - name: port1
               containerPort: 8081
@@ -38,7 +43,7 @@ spec:
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: kbt1-ollilove-user-service
+  name: kbt1-ollilove-user-service-cm
 data:
   DB_SERVER: mysql
   DB_PORT: "3306"
@@ -49,7 +54,7 @@ data:
 kind: Secret
 apiVersion: v1
 metadata:
-  name: kbt1-ollilove-user-service
+  name: kbt1-ollilove-user-service-secret
 type: Opaque
 data:
   DB_USERNAME: ZmFrZXIK            #echo {username} | base64
