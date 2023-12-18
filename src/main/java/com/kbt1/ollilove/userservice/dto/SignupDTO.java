@@ -6,7 +6,9 @@ import lombok.*;
 @Getter
 @Builder
 @NoArgsConstructor
-public class UserRequestDTO {
-    private Long userId;
+public class SignupDTO {
+    private String familyId;
+
+    private String userName;
 
 }

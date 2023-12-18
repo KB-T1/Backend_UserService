@@ -4,5 +4,5 @@ import com.kbt1.ollilove.userservice.domain.Family;
 
 public interface FamilyService {
 
-    //Family findFamilyByUserId(Long userId);
+    Family saveFamily(String familyId);
 }

@@ -1,13 +1,16 @@
 package com.kbt1.ollilove.userservice.service;
 
-import com.kbt1.ollilove.userservice.dto.UserResponseDTO;
+import com.kbt1.ollilove.userservice.dto.SignupDTO;
+import com.kbt1.ollilove.userservice.dto.UserDTO;
 
 import java.util.List;
 
 public interface UserService {
 
-    UserResponseDTO findUserInfoById(Long userId);
+    UserDTO signup(SignupDTO signupDTO);
 
-    List<UserResponseDTO> findFamilyInfoByUserId(Long userId);
+    UserDTO findUserInfoById(Long userId);
+
+    List<UserDTO> findFamilyInfoByUserId(Long userId);
 
 }
