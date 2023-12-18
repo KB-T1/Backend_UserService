@@ -17,8 +17,7 @@ import lombok.NoArgsConstructor;
 public class Family extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long familyId;
+    private String familyId;
 
 
 }
