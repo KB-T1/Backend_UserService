@@ -13,8 +13,6 @@ WORKDIR ${ARTIFACTORY_HOME}
 # Copy your jar to the container
 COPY ./build/libs/${ARTIFACTORY_FILE} ${ARTIFACTORY_HOME}
 
-COPY ./deployment/default.conf.template /etc/nginx/conf.d/default.conf
-
 # Launch the artifactory as docker user
 ENTRYPOINT [ "sh", "-c" ]
 USER docker
