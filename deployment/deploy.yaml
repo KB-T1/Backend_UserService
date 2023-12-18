@@ -74,3 +74,32 @@ spec:
     - name: kbt1-ollilove-user-service
       port: 8080
       targetPort: 8080
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kbt1-ollilove-service
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: kbt1-ollilove-service.165.192.105.60.nip.io
+      http:
+        paths:
+          - path: /user/(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: kbt1-ollilove-user-service
+                port:
+                  number: 8080
+          - path: /transfer/(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: kbt1-ollilove-transfer-service
+                port:
+                  number: 8081
