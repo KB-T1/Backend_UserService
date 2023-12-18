@@ -1,7 +1,7 @@
 server {
   listen 8080;
   location /user/ {
-    rewrite ^/dev(/.*)$ $1 break;
+    rewrite ^/user(/.*)$ $1 break;
     proxy_pass http://base-url;
         proxy_set_header X-Forwarded-Prefix /user;
   }
