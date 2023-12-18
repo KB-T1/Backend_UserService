@@ -2,6 +2,7 @@ server:
   port: ${PORT:18081}
   servlet:
     context-path: ${SERVLET_CONTEXT_PATH:/}
+  forward-headers-strategy: framework
 
 spring:
   application:
