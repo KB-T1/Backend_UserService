@@ -1,34 +1,9 @@
 server:
-  port: ${PORT:8080}
-  servlet:
-    context-path: ${SERVLET_CONTEXT_PATH:/}
-
-spring:
-  config:
-    activate:
-      on-profile: local
-
-
-  datasource:
-    username: root
-    password: 1234
-    url: jdbc:mysql://localhost:3306/sys?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-
----
-
-
-server:
   port: ${PORT:18081}
   servlet:
     context-path: ${SERVLET_CONTEXT_PATH:/}
 
 spring:
-  config:
-    activate:
-      on-profile: dev
-
   application:
     name: Backend_UserService
 
@@ -49,7 +24,7 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
       format_sql: true
 
 logging:
