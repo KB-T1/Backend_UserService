@@ -1,5 +1,5 @@
 server {
-  listen 80;
+  listen 8080;
   location /user/ {
     rewrite ^/dev(/.*)$ $1 break;
     proxy_pass http://base-url;
