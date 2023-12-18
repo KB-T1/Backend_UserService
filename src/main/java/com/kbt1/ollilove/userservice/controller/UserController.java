@@ -10,9 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,17 +22,19 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("")
+    @GetMapping("/{userId}")
     @Operation(summary = "사용자 기본정보 가져오기")
-    public ResponseEntity<UserResponseDTO> selectUserInfo(@RequestBody UserRequestDTO userRequestDTO) {
-        return ResponseEntity.ok(userService.findUserInfoById(userRequestDTO));
+    public ResponseEntity<UserResponseDTO> selectUserInfo(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.findUserInfoById(userId));
     }
 
-    @PostMapping("/family")
+    @GetMapping("/family")
     @Operation(summary = "가족 정보 가져오기")
-    public ResponseEntity<List<UserResponseDTO>> selectFamilyInfo(@RequestBody UserRequestDTO userRequestDTO) {
-        return ResponseEntity.ok(userService.findFamilyInfoByUserId(userRequestDTO));
+    public ResponseEntity<List<UserResponseDTO>> selectFamilyInfo(@RequestParam Long userId) {
+        return ResponseEntity.ok(userService.findFamilyInfoByUserId(userId));
     }
+
+
 
 
 
