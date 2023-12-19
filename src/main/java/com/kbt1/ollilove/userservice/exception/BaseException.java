@@ -1,11 +1,13 @@
 package com.kbt1.ollilove.userservice.exception;
 
-public class BaseException extends RuntimeException{
-    private int code;
+import lombok.Getter;
 
-    public BaseException(int code, String message) {
-        super(message);
-        this.code = code;
+@Getter
+public class BaseException extends RuntimeException {
+    private final ErrorCode errorCode;
+
+    public BaseException(ErrorCode errorCode) {
+        super(errorCode.getMsg());
+        this.errorCode = errorCode;
     }
 }
-
