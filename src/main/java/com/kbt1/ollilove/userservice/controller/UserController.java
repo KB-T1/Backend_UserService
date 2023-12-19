@@ -1,6 +1,8 @@
 package com.kbt1.ollilove.userservice.controller;
 
 
+import com.kbt1.ollilove.userservice.dto.FamilyDTO;
+import com.kbt1.ollilove.userservice.dto.RelationDTO;
 import com.kbt1.ollilove.userservice.dto.SignupDTO;
 import com.kbt1.ollilove.userservice.dto.UserDTO;
 import com.kbt1.ollilove.userservice.service.UserService;
@@ -34,11 +36,17 @@ public class UserController {
         return ResponseEntity.ok(userService.findUserInfoById(userId));
     }
 
-    @GetMapping("/family")
+    @GetMapping("/{userId}/family")
     @Operation(summary = "가족 정보 가져오기")
-    public ResponseEntity<List<UserDTO>> selectFamilyInfo(@RequestParam Long userId) {
+    public ResponseEntity<FamilyDTO> selectFamilyInfo(@PathVariable Long userId) {
         return ResponseEntity.ok(userService.findFamilyInfoByUserId(userId));
     }
+
+
+
+
+
+
 
 
 }

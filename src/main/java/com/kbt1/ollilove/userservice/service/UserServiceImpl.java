@@ -2,6 +2,7 @@ package com.kbt1.ollilove.userservice.service;
 
 import com.kbt1.ollilove.userservice.domain.Family;
 import com.kbt1.ollilove.userservice.domain.User;
+import com.kbt1.ollilove.userservice.dto.FamilyDTO;
 import com.kbt1.ollilove.userservice.dto.SignupDTO;
 import com.kbt1.ollilove.userservice.dto.UserDTO;
 import com.kbt1.ollilove.userservice.repository.UserRepository;
@@ -54,22 +55,32 @@ public class UserServiceImpl implements UserService {
 
     //TODO 나중에 다시 생각해서 고치자~ 우선은 대충 돌아가나 보자~
     @Transactional(readOnly = true)
-    public List<UserDTO> findFamilyInfoByUserId(Long userId) {
+    public FamilyDTO findFamilyInfoByUserId(Long userId) {
 
-        Family family = findUserById(userId).getFamilyId();
+        Family family = findFamilyByUserId(userId);
+        return FamilyDTO.builder()
+                .familyId(family.getFamilyId())
+                .familyMember(
+                        userRepository.findUsersByFamilyId(family)
+                                .stream()
+                                .filter(user -> !user.getUserId().equals(userId))
+                                .map(user -> UserDTO.builder()
+                                        .userId(user.getUserId())
+                                        .userName(user.getUserName())
+                                        .build())
+                                .toList()
+                )
+                .build();
 
-        return userRepository.findUsersByFamilyId(family)
-                .stream()
-                .filter(user -> !user.getUserId().equals(userId))
-                .map(user -> UserDTO.builder()
-                        .userId(user.getUserId())
-                        .userName(user.getUserName())
-                        .build())
-                .toList();
 
     }
 
-    private User findUserById(Long userId) {
+    @Transactional(readOnly = true)
+    public Family findFamilyByUserId(Long userId) {
+        return findUserById(userId).getFamilyId();
+    }
+
+    public User findUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("해당 User 없음"));
     }
 

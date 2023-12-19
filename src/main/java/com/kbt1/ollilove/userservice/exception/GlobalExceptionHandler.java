@@ -17,6 +17,6 @@
 //            , HttpStatus status
 //            , WebRequest request
 //    ) {
-//        return new BaseException("EX003", "HttpRequestMethodNotSupportedException occurred");
+//        return new BaseException(4000, "HttpRequestMethodNotSupportedException occurred");
 //    }
 //}

@@ -12,11 +12,18 @@ public class FamilyServiceImpl implements FamilyService {
 
     private final FamilyRepository familyRepository;
 
+
+    /**
+     * familyId가 존재할 경우, 걍 넘기기
+     * familyId가 존재하지 않을 경우, 저장
+     * but, 둘다 영속성컨텍스트로 알아서 확인
+     *
+     * @param familyId
+     * @return
+     */
     @Transactional
     public Family saveFamily(String familyId) {
-        //familyId가 존재할 경우, 걍 넘기기
-        //familyId가 존재하지 않을 경우, 저장
-        //but, 둘다 영속성컨텍스트로 알아서 확인
+
         Family family = Family.builder()
                 .familyId(familyId)
                 .build();
@@ -25,4 +32,5 @@ public class FamilyServiceImpl implements FamilyService {
 
         return family;
     }
+
 }
