@@ -57,7 +57,7 @@ metadata:
   name: kbt1-ollilove-user-service-secret
 type: Opaque
 data:
-  DB_USERNAME: ZmFrZXIK            #echo {username} | base64
+  DB_USERNAME: cm9vdAo=            #echo {username} | base64
   DB_PASSWORD: a2J0MUJlc3QhCg==    #echo {password} | base64
 
 ---
