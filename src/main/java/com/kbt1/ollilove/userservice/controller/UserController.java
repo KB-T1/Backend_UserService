@@ -28,13 +28,11 @@ public class UserController {
         return ResponseEntity.ok(userService.signup(signupDTO));
     }
 
-
     @GetMapping("/{userId}")
     @Operation(summary = "사용자 기본정보 가져오기")
     public ResponseEntity<ResultDTO<UserDTO>> selectUserInfo(@PathVariable Long userId) {
         return ResponseEntity.ok(userService.findUserInfoById(userId));
     }
-
 
 
 
