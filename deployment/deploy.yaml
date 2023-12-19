@@ -1,32 +1,32 @@
-apiVersion: apps/v1
+piVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kbt1-ollilove-user-service
+  name: kbt1-ollilove-transfer-service
   labels:
-    app: kbt1-ollilove-user-service
+    app: kbt1-ollilove-transfer-service
 spec:
   selector:
     matchLabels:
-      app: kbt1-ollilove-user-service
+      app: kbt1-ollilove-transfer-service
   replicas: 1
   template:
     metadata:
-      name: kbt1-ollilove-user-service
+      name: kbt1-ollilove-transfer-service
       labels:
-        app: kbt1-ollilove-user-service
+        app: kbt1-ollilove-transfer-service
     spec:
       containers:
-        - name: kbt1-ollilove-user-service
-          image: docker.io/gyuminn/kbt1-ollilove-user-service:1.0.0
+        - name: kbt1-ollilove-transfer-service
+          image: docker.io/gyuminn/kbt1-ollilove-transfer-service:1.0.0
           imagePullPolicy: Always
           env:
             - name: PORT
               value: "8080"
           envFrom:
             - configMapRef:
-                name: kbt1-ollilove-user-service-cm
+                name: kbt1-ollilove-transfer-service-cm
             - secretRef:
-                name: kbt1-ollilove-user-service-secret
+                name: kbt1-ollilove-transfer-service-secret
           ports:
             - name: port1
               containerPort: 8081
@@ -37,6 +37,15 @@ spec:
             limits:
               cpu: 500m
               memory: 1024Mi
+          volumeMounts:
+            - name: media-data
+              mountPath: /root/data
+              readOnly: false
+      volumes:
+        - name: media-data
+          persistentVolumeClaim:
+            claimName: kbt1-ollilove-transfer-pvc
+            readOnly: false
 
 ---
 
