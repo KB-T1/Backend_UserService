@@ -1,6 +1,7 @@
 package com.kbt1.ollilove.userservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kbt1.ollilove.userservice.domain.user.UserProfile;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,6 +19,10 @@ public class UserDTO {
     private String userName;
 
     private String nickname;
+
+    private UserProfile profile;
+
+
 
 
 }

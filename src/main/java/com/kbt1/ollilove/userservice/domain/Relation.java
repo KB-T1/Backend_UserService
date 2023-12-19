@@ -1,5 +1,6 @@
 package com.kbt1.ollilove.userservice.domain;
 
+import com.kbt1.ollilove.userservice.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,10 +13,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 public class Relation extends BaseTimeEntity {
-
+//TODO 나중에 relationId 버리고 targeterId, targedId
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long relationId;
+    private String relationId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "targeter_id",nullable = false)
     private User targeterId;
