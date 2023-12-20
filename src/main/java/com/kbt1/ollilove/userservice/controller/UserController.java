@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
 @Tag(name = "User", description = "유저API")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin({"http://localhost:3000","http://ollilove.165.192.105.60.nip.io"})
 public class UserController {
 
     private final UserService userService;

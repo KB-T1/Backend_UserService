@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @Tag(name = "Relation", description = "관계API")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin({"http://localhost:3000","http://ollilove.165.192.105.60.nip.io"})
 public class RelationController {
 
     private final RelationService relationService;
@@ -25,7 +25,7 @@ public class RelationController {
         return ResponseEntity.ok(relationService.saveRelation(relationDTO));
     }
 
-    @GetMapping("/{userId}/family")
+    @GetMapping("/family/user/{userId}")
     @Operation(summary = "가족 정보 가져오기")
     public ResponseEntity<ResultDTO<FamilyDTO>> selectFamilyInfo(@PathVariable Long userId) {
         return ResponseEntity.ok(relationService.findFamilyInfoByUserId(userId));
