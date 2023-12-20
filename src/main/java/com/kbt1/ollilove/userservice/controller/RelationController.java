@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @Tag(name = "Relation", description = "관계API")
+@CrossOrigin("http://localhost:3000")
 public class RelationController {
 
     private final RelationService relationService;
