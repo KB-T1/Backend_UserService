@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -62,11 +64,13 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-    //TODO 나중에 다시 생각해서 고치자~ 우선은 대충 돌아가나 보자~
-
 
     public User findUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("해당 User 없음"));
+    }
+
+    public List<UserDTO> findRelationWithUsers(String familyId, Long targeterId){
+        return userRepository.findByFamilyIdWithRelation(familyId,targeterId);
     }
 
 }

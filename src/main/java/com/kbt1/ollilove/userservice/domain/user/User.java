@@ -2,6 +2,7 @@ package com.kbt1.ollilove.userservice.domain.user;
 
 import com.kbt1.ollilove.userservice.domain.BaseTimeEntity;
 import com.kbt1.ollilove.userservice.domain.Family;
+import com.kbt1.ollilove.userservice.domain.Relation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +31,7 @@ public class User extends BaseTimeEntity {
     @Column
     @Enumerated(EnumType.STRING)
     private UserProfile profile;
+
 
 
 }
