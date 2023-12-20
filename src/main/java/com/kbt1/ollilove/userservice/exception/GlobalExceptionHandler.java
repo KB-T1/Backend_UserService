@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 
-    @ExceptionHandler(IllegalArgumentException.class)
+    //@ExceptionHandler(IllegalArgumentException.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
         final ErrorCode errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
         final ErrorResponse response =
@@ -50,21 +50,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(errorCode, e.getMessage());
     }
 
-    @ExceptionHandler({Exception.class})
+    //@ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleAllException(Exception ex) {
         ErrorCode errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
-        return handleExceptionInternal(errorCode);
+        return handleExceptionInternal(ex,errorCode);
     }
 
-    private ResponseEntity<Object> handleExceptionInternal(ErrorCode errorCode) {
+    private ResponseEntity<Object> handleExceptionInternal(Exception ex,ErrorCode errorCode) {
         return ResponseEntity.status(errorCode.getStatus())
-                .body(makeErrorResponse(errorCode));
+                .body(makeErrorResponse(ex,errorCode));
     }
 
-    private ErrorResponse makeErrorResponse(ErrorCode errorCode) {
+    private ErrorResponse makeErrorResponse(Exception ex,ErrorCode errorCode) {
         return ErrorResponse.builder()
                 .code(errorCode.name())
-                .message(errorCode.getMsg())
+                .message(ex.getMessage())
                 .build();
     }
 
