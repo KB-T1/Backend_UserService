@@ -8,6 +8,8 @@ import com.kbt1.ollilove.userservice.dto.UserDTO;
 import com.kbt1.ollilove.userservice.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,7 +33,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     @Operation(summary = "사용자 기본정보 가져오기")
-    public ResponseEntity<ResultDTO<UserDTO>> selectUserInfo(@PathVariable Long userId) {
+    public ResponseEntity<ResultDTO<UserDTO>> selectUserInfo(@PathVariable @Min(value = 1) Long userId) {
         return ResponseEntity.ok(userService.findUserInfoById(userId));
     }
 

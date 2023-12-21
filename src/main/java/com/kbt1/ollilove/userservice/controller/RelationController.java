@@ -21,7 +21,7 @@ public class RelationController {
     private final RelationService relationService;
     @PostMapping("/relation")
     @Operation(summary = "별명 정하기")
-    public ResponseEntity<ResultDTO> saveNickname(@RequestBody RelationDTO relationDTO){
+    public ResponseEntity<ResultDTO<RelationDTO>> saveNickname(@RequestBody RelationDTO relationDTO){
         return ResponseEntity.ok(relationService.saveRelation(relationDTO));
     }
 

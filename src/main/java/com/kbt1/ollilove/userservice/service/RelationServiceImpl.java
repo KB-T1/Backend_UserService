@@ -18,7 +18,7 @@ public class RelationServiceImpl implements RelationService {
     private final UserService userService;
 
     //TODO targeterId, targetedId 가 존재하는 유저인지 exception처리
-    public ResultDTO saveRelation(RelationDTO relationDTO) {
+    public ResultDTO<RelationDTO> saveRelation(RelationDTO relationDTO) {
 
         Relation relation =
                 Relation.builder()
@@ -30,8 +30,9 @@ public class RelationServiceImpl implements RelationService {
 
         relationRepository.save(relation);
 
-        return ResultDTO.builder()
+        return ResultDTO.<RelationDTO>builder()
                 .success(true)
+                .data(relationDTO)
                 .build();
 
     }
